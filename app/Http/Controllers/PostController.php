@@ -8,6 +8,26 @@ use Illuminate\Http\Request;
 use App\Http\Requests\StorePostRequest;
 use App\Http\Requests\UpdatePostRequest;
 /**
+ * @OA\Get(
+ *    path="/api/posts",
+ *    summary="Get all posts",
+ *    description="Get all posts without specifying an ID",
+ *    tags={"Post"},
+ *    @OA\Response(
+ *        response=200,
+ *        description="OK",
+ *        @OA\JsonContent(
+ *            type="array",
+ *            @OA\Items(
+ *                type="object",
+ *                @OA\Property(property="id", type="integer"),
+ *                @OA\Property(property="title", type="string"),
+ *                @OA\Property(property="description", type="string")
+ *            )
+ *        )
+ *    )
+ *)
+ *
  * @OA\Post(
  *     path="/api/posts",
  *     summary="Create a new post",
@@ -126,6 +146,10 @@ class PostController extends Controller
 
     public function store(Request $request)
     {
+        $request->validate([
+        'title' => 'required|unique:posts|min:5|max:10',
+        'description' => 'required|min:10|max:50'
+        ]);
         $post = Post::create($request->all());
         return response()->json($post, 201);
     }
@@ -138,6 +162,10 @@ class PostController extends Controller
 
     public function update(Request $request, $id)
     {
+        $request->validate([
+            'title' => 'required|min:5|max:10',
+            'description' => 'required|min:10|max:50'
+            ]);
         $post = Post::findOrFail($id);
         $post->update($request->all());
         return response()->json($post, 200);
