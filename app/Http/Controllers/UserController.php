@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Users;
+use App\Models\User;
 use App\Models\Phone;
 use Illuminate\Http\Request;
     /**
@@ -118,16 +118,16 @@ use Illuminate\Http\Request;
  * )
  */
 
-class UsersController extends Controller
+class UserController extends Controller
 {
     public function index()
     {
-        return Users::all();
+        return User::all();
     }
 
     public function store(Request $request)
     {
-        $user = Users::create($request->all());
+        $user = User::create($request->all());
 
         $phone = new Phone();
         $phone->number = $request->input('number');
@@ -139,19 +139,19 @@ class UsersController extends Controller
 
     public function show($id)
     {
-        return Users::findOrFail($id);
+        return User::findOrFail($id);
     }
 
     public function update(Request $request, $id)
     {
-        $user = Users::findOrFail($id);
+        $user = User::findOrFail($id);
         $user->update($request->all());
         return $user;
     }
 
     public function destroy($id)
     {
-        $user = Users::findOrFail($id);
+        $user = User::findOrFail($id);
         $user->delete();
         return 204;
     }

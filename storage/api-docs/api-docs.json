@@ -1,82 +1,69 @@
 {
     "openapi": "3.0.0",
     "info": {
-        "title": "Your super  ApplicationAPI",
+        "title": "Swagger with Laravel",
         "version": "1.0.0"
     },
     "paths": {
         "/api/posts": {
             "get": {
                 "tags": [
-                    "Post"
+                    "Get all posts"
                 ],
                 "summary": "Get all posts",
-                "description": "Get all posts without specifying an ID",
-                "operationId": "8c292c8777126dc6d3efb05793ca8517",
+                "operationId": "e9eaf7df702a94f4443677bd1a36cfe6",
                 "responses": {
                     "200": {
-                        "description": "OK",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "array",
-                                    "items": {
-                                        "properties": {
-                                            "id": {
-                                                "type": "integer"
-                                            },
-                                            "title": {
-                                                "type": "string"
-                                            },
-                                            "description": {
-                                                "type": "string"
-                                            }
-                                        },
-                                        "type": "object"
-                                    }
-                                }
-                            }
-                        }
+                        "description": "Success"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             },
             "post": {
                 "tags": [
-                    "Post"
+                    "Create a new post"
                 ],
                 "summary": "Create a new post",
-                "description": "Create a new post with the provided title and description",
-                "operationId": "e65ec23954b56b8ece120e19fd94fe87",
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "required": [
-                                    "title",
-                                    "description"
-                                ],
-                                "properties": {
-                                    "title": {
-                                        "type": "string",
-                                        "example": "New Post Title"
-                                    },
-                                    "description": {
-                                        "type": "string",
-                                        "example": "This is a new post description"
-                                    }
-                                },
-                                "type": "object"
-                            }
+                "operationId": "4a657e51a0066c64781851f2fd2651e2",
+                "parameters": [
+                    {
+                        "name": "title",
+                        "in": "query",
+                        "description": "post's name",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "description",
+                        "in": "query",
+                        "description": "post's description",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "user_id",
+                        "in": "query",
+                        "description": "user_id",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
                         }
                     }
-                },
+                ],
                 "responses": {
-                    "200": {
-                        "description": "OK",
-                        "content": {
-                            "application/json": {}
-                        }
+                    "201": {
+                        "description": "Successfully"
+                    },
+                    "400": {
+                        "description": "Errors"
                     }
                 }
             }
@@ -84,208 +71,188 @@
         "/api/posts/{id}": {
             "get": {
                 "tags": [
-                    "Post"
+                    "Get a post"
                 ],
-                "summary": "Get post by ID",
-                "description": "Get a post by its ID",
-                "operationId": "380ebd6ea1942a3eff9d4719a866e457",
+                "summary": "Get a post",
+                "operationId": "b0f9d92879218f68a376b6edc6467c67",
                 "parameters": [
                     {
                         "name": "id",
                         "in": "path",
-                        "description": "ID of the post to retrieve",
+                        "description": "post's id",
                         "required": true,
                         "schema": {
-                            "type": "integer"
+                            "type": "string"
                         }
                     }
                 ],
                 "responses": {
                     "200": {
-                        "description": "OK",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "id": {
-                                            "type": "integer"
-                                        },
-                                        "title": {
-                                            "type": "string"
-                                        },
-                                        "description": {
-                                            "type": "string"
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
+                        "description": "Success"
                     },
-                    "404": {
-                        "description": "Post not found"
+                    "400": {
+                        "description": "Errors"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             },
             "put": {
                 "tags": [
-                    "Post"
+                    "Update a post"
                 ],
-                "summary": "Update post",
-                "description": "Update an existing post",
-                "operationId": "17dddea8ac2c09e99990514c116ef5b0",
+                "summary": "Update a post",
+                "operationId": "929614537d76a081a92170a41ed3bdb3",
                 "parameters": [
                     {
                         "name": "id",
                         "in": "path",
-                        "description": "ID of the post to update",
+                        "description": "post's id",
                         "required": true,
                         "schema": {
-                            "type": "integer"
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "title",
+                        "in": "query",
+                        "description": "post's name",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "description",
+                        "in": "query",
+                        "description": "post's description",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "user_id",
+                        "in": "query",
+                        "description": "user_id",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
                         }
                     }
                 ],
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "required": [
-                                    "title",
-                                    "description"
-                                ],
-                                "properties": {
-                                    "title": {
-                                        "type": "string",
-                                        "example": "Updated Post Title"
-                                    },
-                                    "description": {
-                                        "type": "string",
-                                        "example": "This is an updated post description"
-                                    }
-                                },
-                                "type": "object"
-                            }
-                        }
-                    }
-                },
                 "responses": {
-                    "200": {
-                        "description": "Post updated successfully"
+                    "201": {
+                        "description": "Successfully"
                     },
-                    "404": {
-                        "description": "Post not found"
+                    "400": {
+                        "description": "Errors"
                     }
                 }
             },
             "delete": {
                 "tags": [
-                    "Post"
+                    "Delete a post"
                 ],
-                "summary": "Delete post",
-                "description": "Delete an existing post",
-                "operationId": "f43d1f0d1b0f61d306c35cef1ecbf7e2",
+                "summary": "Delete a post",
+                "operationId": "fad1726bd24cd459fc1525b67985df39",
                 "parameters": [
                     {
                         "name": "id",
                         "in": "path",
-                        "description": "ID of the post to delete",
+                        "description": "post's id",
                         "required": true,
                         "schema": {
-                            "type": "integer"
+                            "type": "string"
                         }
                     }
                 ],
                 "responses": {
                     "200": {
-                        "description": "Post deleted successfully"
+                        "description": "Success"
                     },
-                    "404": {
-                        "description": "Post not found"
+                    "400": {
+                        "description": "Errors"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
         "/api/users": {
             "get": {
                 "tags": [
-                    "User"
+                    "Get all users"
                 ],
                 "summary": "Get all users",
-                "description": "Get all users without specifying an ID",
-                "operationId": "6ae89fedbb5593eec10043d5b8b8eeeb",
+                "operationId": "c457726701591d1183b53aa71fc13441",
                 "responses": {
                     "200": {
-                        "description": "OK",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "array",
-                                    "items": {
-                                        "properties": {
-                                            "id": {
-                                                "type": "integer"
-                                            },
-                                            "name": {
-                                                "type": "string"
-                                            },
-                                            "email": {
-                                                "type": "string"
-                                            },
-                                            "password": {
-                                                "type": "string"
-                                            }
-                                        },
-                                        "type": "object"
-                                    }
-                                }
-                            }
-                        }
+                        "description": "Success"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             },
             "post": {
                 "tags": [
-                    "User"
+                    "Create a new user"
                 ],
-                "summary": "Create a new users",
-                "description": "Create a new users with the provided name, email and password",
-                "operationId": "f0e58190c9eb79b544d10bc48579121f",
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "required": [
-                                    "name",
-                                    "email",
-                                    "password"
-                                ],
-                                "properties": {
-                                    "name": {
-                                        "type": "string",
-                                        "example": "New User Name"
-                                    },
-                                    "email": {
-                                        "type": "string",
-                                        "example": "user.1@gmail.com"
-                                    },
-                                    "password": {
-                                        "type": "string",
-                                        "example": "user123"
-                                    }
-                                },
-                                "type": "object"
-                            }
+                "summary": "Create a new user",
+                "operationId": "592819a0265360b2014512d6dbfaf0e7",
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "name",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "email",
+                        "in": "query",
+                        "description": "email",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "password",
+                        "in": "query",
+                        "description": "password",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "number",
+                        "in": "query",
+                        "description": "number",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
                         }
                     }
-                },
+                ],
                 "responses": {
-                    "200": {
-                        "description": "User created successfully",
-                        "content": {
-                            "application/json": {}
-                        }
+                    "201": {
+                        "description": "Successfully"
+                    },
+                    "400": {
+                        "description": "Errors"
                     }
                 }
             }
@@ -293,134 +260,127 @@
         "/api/users/{id}": {
             "get": {
                 "tags": [
-                    "User"
+                    "Get one user by id"
                 ],
-                "summary": "Get user by ID",
-                "description": "Get a user by its ID",
-                "operationId": "a6ae78fea4e4bb3b350a6cc661a09066",
+                "summary": "Get one user by id",
+                "operationId": "36a33ff774d5cba33c039dec2c3e0287",
                 "parameters": [
                     {
                         "name": "id",
                         "in": "path",
-                        "description": "ID of the user to retrieve",
+                        "description": "id",
                         "required": true,
                         "schema": {
-                            "type": "integer"
+                            "type": "string"
                         }
                     }
                 ],
                 "responses": {
                     "200": {
-                        "description": "OK",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "id": {
-                                            "type": "integer"
-                                        },
-                                        "name": {
-                                            "type": "string"
-                                        },
-                                        "email": {
-                                            "type": "string"
-                                        },
-                                        "password": {
-                                            "type": "string"
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
+                        "description": "Success"
                     },
-                    "404": {
-                        "description": "User not found"
+                    "400": {
+                        "description": "Errors"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             },
             "put": {
                 "tags": [
-                    "User"
+                    "Update a user"
                 ],
-                "summary": "Update user",
-                "description": "Update an existing user",
-                "operationId": "98cc923ceb70149519621f4e22c5a2c9",
+                "summary": "Update a user",
+                "operationId": "b9091397c8b25f12c6adb74be6ce3a5a",
                 "parameters": [
                     {
                         "name": "id",
                         "in": "path",
-                        "description": "ID of the user to update",
+                        "description": "user's id",
                         "required": true,
                         "schema": {
-                            "type": "integer"
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "name",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "email",
+                        "in": "query",
+                        "description": "email",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "password",
+                        "in": "query",
+                        "description": "password",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
                         }
                     }
                 ],
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "required": [
-                                    "name",
-                                    "email",
-                                    "password"
-                                ],
-                                "properties": {
-                                    "name": {
-                                        "type": "string",
-                                        "example": "Updated User Name"
-                                    },
-                                    "email": {
-                                        "type": "string",
-                                        "example": "updated.user@gmail.com"
-                                    },
-                                    "password": {
-                                        "type": "string",
-                                        "example": "updated123"
-                                    }
-                                },
-                                "type": "object"
-                            }
-                        }
-                    }
-                },
                 "responses": {
-                    "200": {
-                        "description": "User updated successfully"
+                    "201": {
+                        "description": "Successfully"
                     },
-                    "404": {
-                        "description": "User not found"
+                    "400": {
+                        "description": "Errors"
                     }
                 }
             },
             "delete": {
                 "tags": [
-                    "User"
+                    "Delete a user"
                 ],
-                "summary": "Delete user",
-                "description": "Delete an existing user",
-                "operationId": "34a4c48da16fa7e66e2b6d7cd60b0c0e",
+                "summary": "Delete a user",
+                "operationId": "fa56cffde745d3f152f95cbacd936c0b",
                 "parameters": [
                     {
                         "name": "id",
                         "in": "path",
-                        "description": "ID of the user to delete",
+                        "description": "user's id",
                         "required": true,
                         "schema": {
-                            "type": "integer"
+                            "type": "string"
                         }
                     }
                 ],
                 "responses": {
                     "200": {
-                        "description": "User deleted successfully"
+                        "description": "Success"
                     },
-                    "404": {
-                        "description": "User not found"
+                    "400": {
+                        "description": "Errors"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "bearerFormat": "JWT",
+                "scheme": "bearer"
             }
         }
     }

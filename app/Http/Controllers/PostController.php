@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
+use App\Models\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\StorePostRequest;
@@ -140,40 +141,35 @@ class PostController extends Controller
 {
     public function index()
     {
-        $posts = Post::all();
-        return response()->json($posts);
+        return Post::all();
     }
 
     public function store(Request $request)
     {
-        $request->validate([
-        'title' => 'required|unique:posts|min:5|max:10',
-        'description' => 'required|min:10|max:50'
-        ]);
         $post = Post::create($request->all());
-        return response()->json($post, 201);
+        $post = new User();
+        $post->user_id = $request->input('user_id');
+        $post->user_id = $post->id;
+        $post->save();
+        return $post;
     }
 
     public function show($id)
     {
-        $post = Post::findOrFail($id);
-        return response()->json($post);
+        return Post::findOrFail($id);
     }
 
     public function update(Request $request, $id)
     {
-        $request->validate([
-            'title' => 'required|min:5|max:10',
-            'description' => 'required|min:10|max:50'
-            ]);
         $post = Post::findOrFail($id);
         $post->update($request->all());
-        return response()->json($post, 200);
+        return $post;
     }
 
     public function destroy($id)
     {
-        Post::findOrFail($id)->delete();
-        return response()->json(null, 204);
+        $post = Post::findOrFail($id);
+        $post->delete();
+        return 204;
     }
 }

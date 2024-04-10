@@ -3,7 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
-use App\Http\Controllers\UsersController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\PhoneController;
 
 /*
@@ -27,11 +27,11 @@ Route::get('/posts/{id}', [PostController::class, 'show']);
 Route::put('/posts/{id}', [PostController::class, 'update']);
 Route::delete('/posts/{id}', [PostController::class, 'destroy']);
 
-Route::get('/users', [UsersController::class, 'index']);
-Route::post('/users', [UsersController::class, 'store']);
-Route::get('/users/{id}', [UsersController::class, 'show']);
-Route::put('/users/{id}', [UsersController::class, 'update']);
-Route::delete('/users/{id}', [UsersController::class, 'destroy']);
+Route::get('/users', [UserController::class, 'index']);
+Route::post('/users', [UserController::class, 'store']);
+Route::get('/users/{id}', [UserController::class, 'show']);
+Route::put('/users/{id}', [UserController::class, 'update']);
+Route::delete('/users/{id}', [UserController::class, 'destroy']);
 
 Route::get('/phones', [PhoneController::class, 'index']);
 Route::post('/phones', [PhoneController::class, 'store']);
