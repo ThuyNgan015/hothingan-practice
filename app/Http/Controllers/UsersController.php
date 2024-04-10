@@ -3,32 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Users;
-use App\Http\Controllers\Controller;
+use App\Models\Phone;
 use Illuminate\Http\Request;
-use App\Http\Requests\StoreUsersRequest;
-use App\Http\Requests\UpdateUsersRequest;
-/**
- * @OA\Get(
- *   path="/api/users",
- *   summary="Get all users",
- *   description="Get all users without specifying an ID",
- *   tags={"User"},
- *   @OA\Response(
- *       response=200,
- *       description="OK",
- *       @OA\JsonContent(
- *           type="array",
- *           @OA\Items(
- *               type="object",
- *               @OA\Property(property="id", type="integer"),
- *               @OA\Property(property="name", type="string"),
- *               @OA\Property(property="email", type="string"),
- *               @OA\Property(property="password", type="string")
- *           )
- *       )
- *   )
- *)
- *
+    /**
  * @OA\Post(
  *     path="/api/users",
  *     summary="Create a new users",
@@ -145,42 +122,38 @@ class UsersController extends Controller
 {
     public function index()
     {
-        $users = Users::all();
-        return response()->json($users);
+        return Users::all();
     }
 
     public function store(Request $request)
     {
-        $request->validate([
-            'name' => 'string|required|min:3|max:15',
-            'email' => 'string|required|email|unique:users',
-            'password' => 'string|required|confirmed'
-            ]);
         $user = Users::create($request->all());
-        return response()->json($user, 201);
+
+        $phone = new Phone();
+        $phone->number = $request->input('number');
+        $phone->user_id = $user->id;
+        $phone->save();
+
+        return $user;
     }
 
     public function show($id)
     {
-        $user = Users::findOrFail($id);
-        return response()->json($user);
+        return Users::findOrFail($id);
     }
 
     public function update(Request $request, $id)
     {
-        $request->validate([
-            'name' => 'string|required|min:3|max:15',
-            'email' => 'string|required|email|unique:users',
-            'password' => 'string|required|confirmed'
-            ]);
         $user = Users::findOrFail($id);
         $user->update($request->all());
-        return response()->json($user, 200);
+        return $user;
     }
 
     public function destroy($id)
     {
-        Users::findOrFail($id)->delete();
-        return response()->json(null, 204);
+        $user = Users::findOrFail($id);
+        $user->delete();
+        return 204;
     }
+
 }
